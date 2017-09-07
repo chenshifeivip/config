@@ -1,0 +1,14 @@
+- name: Nginx|copy nginx deb to remote
+  copy: |
+      directory_mode=0755
+      mode=0644
+      src={{ nginx_src }}
+      dest={{ nginx_dest }}
+      owner=lanjing
+      group=lanjing
+- name: Nginx|install nginx common
+  apt:
+      deb={{ nginx_common }}
+
+
+

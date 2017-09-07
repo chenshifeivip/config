@@ -1,0 +1,9 @@
+- name: Copy Directory
+  copy: |
+      directory_mode=0755           #目录权限
+      mode=0644                     #文件权限
+      src=/tmp/static               #如果是结尾带/就会拷贝该目录下的文件,不带/就是拷贝目录
+      dest=/tmp/a/b/c               #目录自动创建
+      owner=root
+      group=root
+

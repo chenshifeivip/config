@@ -1,0 +1,9 @@
+#https://docs.ansible.com/ansible/latest/synchronize_module.html
+#比copy快很多,可以排除部分文件
+- name: Nginx|copy dir to remote
+  synchronize: |
+      src={{nginx_src}}
+      dest={{nginx_dest}}
+      recursive=yes
+
+

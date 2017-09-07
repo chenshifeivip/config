@@ -1,0 +1,3 @@
+- name: Nginx|install nginx
+  apt:
+      deb=/tmp/nginxpck/nginx-common_1.4.6-1ubuntu3.7_all.deb

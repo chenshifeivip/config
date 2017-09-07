@@ -1,0 +1,12 @@
+# ./ansible-playbook ./nginx/deploy.yml --ask-sudo-pass -vvvv
+- hosts: server201
+  vars:
+      nginx_dest: /tmp/nginxpck/
+      nginx_src: /home/xiongzhibiao/tools/nginx/nginx-build-code/
+      nginx_common: nginx-common_1.4.6-1ubuntu3.7_all.deb
+      nginx_full: nginx-full_1.4.6-1ubuntu3.7_amd64.deb
+  remote_user: lanjing
+  sudo: yes
+  sudo_user: root
+  tasks:
+      - include: './tasks/install_nginx.yml'
