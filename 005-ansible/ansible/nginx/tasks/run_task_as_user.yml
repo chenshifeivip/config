@@ -1,0 +1,4 @@
+- name: Nginx|install nginx
+  shell: echo `id` >>/tmp/hell
+  sudo: yes
+  sudo_user: tomcat
