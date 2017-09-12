@@ -1,0 +1,33 @@
+- name: Tomcat|rsync code to code dir
+  synchronize: |
+          src={{code_src}}
+          dest=/tmp/ansible
+
+- name: Tomcat|remove origin code
+  command: rm -rf {{code_dest}}/{{code_src|basename}}
+
+- name: Tomcat|code stat
+  stat: path=/tmp/ansible/{{code_src|basename}}
+  register: foo_stat
+ 
+- name: Tomcat|move code to dest
+  command: mv /tmp/ansible/{{code_src|basename}} {{code_dest}}
+  when: foo_stat.stat.exists
+
+ 
+- name: Tomcat|remove origin link file
+  command: rm -rf {{link_dest}}/{{code_src|basename}}
+
+- name: Tomcat|create link file
+  file: |
+          src={{code_dest}}/{{code_name}}
+          dest={{link_dest}}/{{code_src|basename}}
+          state=link
+
+- name: Tomcat|restart server
+  #service: |
+  #        name=ssh
+  #        state=restarted
+  command: id
+  sudo: yes
+  sudo_user: tomcat

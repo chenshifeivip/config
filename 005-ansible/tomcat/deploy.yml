@@ -1,0 +1,12 @@
+#ansible-playbook -i hosts deploy.yml  -vv --ask-sudo-pass
+- hosts: local
+  vars:
+    - code_src: /home/lanjing/tools/tomcat/apache-tomcat-8.5.20
+    - code_name: "{{code_src|basename}}"           #变量需要使用引号
+    - code_dest: /tmp/code
+    - link_dest: /tmp/deploy
+  tasks:
+    - include: './task.yml'
+
+
+
