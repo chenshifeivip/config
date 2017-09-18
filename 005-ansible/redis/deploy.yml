@@ -1,0 +1,15 @@
+#ansible-playbook -i hosts deploy.yml  -vv --ask-sudo-pass
+- hosts: local-company
+  vars:
+    - code_src: ./redis-3.2.6
+    - code_name: "{{code_src|basename}}"           #变量需要使用引号
+    - redis_root: /opt/redis-3.2.6
+    - port: 38881
+    - data_dir: /tmp/redis-data
+  tasks:
+    - include: './tasks/install_redis.yml'
+    - include: './tasks/config_redis.yml'
+    - include: './tasks/start_server.yml'
+
+
+

@@ -1,0 +1,22 @@
+- name: Redis|rsync code to code dir
+  synchronize: |
+          src={{code_src}}
+          dest=/tmp/ansible
+
+- name: Redis|remove origin code
+  command: rm -rf {{redis_root}}
+  sudo: yes
+  sudo_user: root
+
+- name: Redis|move code to dest
+  command: mv /tmp/ansible/{{code_name}} {{redis_root}}
+  sudo: yes
+  sudo_user: root
+
+  #- name: Tomcat|restart server
+  #  #service: |
+  #  #        name=ssh
+  #  #        state=restarted
+  #  command: id
+  #  sudo: yes
+  #  sudo_user: tomcat

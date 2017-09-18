@@ -1,0 +1,17 @@
+- name: Redis|config redis 
+  template:
+      src=./../file/redis.conf
+      dest={{redis_root}}/redis.conf
+
+#创建数据目录如果不存在
+- name: Redis|mkdir redis datadir
+  file:
+      path={{data_dir}}
+      state=directory
+
+- name: Redis|config redis service script
+  template:
+      src=./../file/redis_service
+      dest=/etc/init.d/redis_{{port}}
+  sudo: yes
+  sudo_user: root

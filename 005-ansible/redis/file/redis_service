@@ -1,0 +1,61 @@
+#!/bin/sh
+
+
+### BEGIN INIT INFO
+# Provides:             redis-{{port}}
+# Required-Start:       $remote_fs $syslog
+# Required-Stop:        $remote_fs $syslog
+# Default-Start:        2 3 4 5
+# Default-Stop:
+# Short-Description:    redis {{port}} service
+### END INIT INFO
+
+EXEC={{redis_root}}/src/redis-server
+CLIEXEC={{redis_root}}/src/redis-cli
+PIDFILE=/var/run/redis_{{port}}.pid
+CONF="{{redis_root}}/redis.conf"
+REDISPORT="{{port}}"
+
+case "$1" in
+    start)
+        if [ -f $PIDFILE ]
+        then
+            echo "$PIDFILE exists, process is already running or crashed"
+        else
+            echo "Starting Redis server..."
+            $EXEC $CONF &
+        fi
+        ;;
+    stop)
+        if [ ! -f $PIDFILE ]
+        then
+            echo "$PIDFILE does not exist, process is not running"
+        else
+            PID=$(cat $PIDFILE)
+            echo "Stopping ..."
+            $CLIEXEC -p $REDISPORT shutdown
+            while [ -x /proc/${PID} ]
+            do
+                echo "Waiting for Redis to shutdown ..."
+                sleep 1
+            done
+            echo "Redis stopped"
+        fi
+        ;;
+    status)
+        if [ ! -e ${PIDFILE} ]
+        then
+            echo 'Redis is not running'
+        else
+            PID=$(cat $PIDFILE)
+            echo "Redis is running ($PID)"
+        fi
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Please use start, stop, restart or status as first argument"
+        ;;
+esac

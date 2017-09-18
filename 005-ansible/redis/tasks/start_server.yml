@@ -1,0 +1,19 @@
+- name: Redis|move server script  redis to /etc/init.d
+  shell: |
+      chmod +x /etc/init.d/redis_{{port}}
+      update-rc.d redis_{{port}} defaults 
+  sudo: yes
+  sudo_user: root
+
+
+- name: Redis|start server redis 
+  #service: |
+  #        name=zookeeper_{{port}}
+  #        state=start
+  #sudo: yes
+  #sudo_user: root
+  shell: |
+      service redis_{{port}} start
+  sudo: yes
+  sudo_user: root
+  
