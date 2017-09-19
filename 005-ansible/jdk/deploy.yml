@@ -1,0 +1,7 @@
+#ansible-playbook -i hosts deploy.yml  -vv --ask-sudo-pass
+- hosts: local
+  tasks:
+    - include: './tasks/main.yml'
+
+
+
